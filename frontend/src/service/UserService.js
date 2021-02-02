@@ -8,4 +8,12 @@ function getUserById(id) {
     return Axios.get(`/users/${id}`);
 }
 
-export { getAllUsers, getUserById }
+function deleteUserById(id){
+    return Axios.delete(`/users/${id}`);
+}
+
+function postUser(user){
+    return Axios.post("/users", user);
+}
+
+export { getAllUsers, getUserById, deleteUserById, postUser }

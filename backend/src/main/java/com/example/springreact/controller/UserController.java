@@ -34,4 +34,13 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long id){
         return userRepository.findById(id).map(user -> ResponseEntity.ok().body(user)).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<User> deleteUserById(@PathVariable Long id)
+    {
+       return userRepository.findById(id).map(user -> {
+           userRepository.delete(user);
+           return ResponseEntity.ok().body(user);
+       }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

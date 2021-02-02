@@ -1,36 +1,36 @@
-import { useEffect, useState } from "react";
-
-import { List, ListItem } from "@material-ui/core";
-import { getAllUsers } from "../service/UserService";
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useUserContext } from "../store/UserContext"
 
 function UserList() {
 
-    const [ data, setData ] = useState([]);
+    const { users, deleteUser } = useUserContext();
 
-    useEffect(() => {
-        getAllUsers().then(res => {
-            console.log(res);
-            setData(res.data);
-        })
-    }, [])
-
-    if(data.length === 0){
+    if (users.length === 0) {
         return (
             <></>
         );
     }
-    else{
+    else {
         return (
             <>
                 <List>
                     {
-                        data.map((user) => <ListItem key={user.id}>{user.name} - {user.email}</ListItem>)
+                        users.map((user) => 
+                        <ListItem key={user.id}>
+                            <ListItemText primary={user.name}/>
+                            <ListItemSecondaryAction onClick={() => deleteUser(user.id)}>
+                                <IconButton edge="end" aria-label="delete">
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>)
                     }
                 </List>
             </>
         )
     }
-     
-  }
-  
-  export default UserList;
+
+}
+
+export default UserList;
