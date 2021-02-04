@@ -1,6 +1,9 @@
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import { useUserContext } from "../store/UserContext"
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserForm() {
 
@@ -22,7 +25,10 @@ function UserForm() {
             name,
             email
         }
-        addUser(user);
+        if(addUser(user))
+            toast.success("User created with success!");
+        else
+            toast.error("Ooops, something went wrong!");
     }
 
     return (
@@ -36,6 +42,7 @@ function UserForm() {
                 <Input id="email-input" type="email" value={email} onChange={emailChangeHandler}/>
             </FormControl>
             <Button onClick={formSubmit}>Add</Button>
+            <ToastContainer/>
         </>
 
     )

@@ -11,16 +11,24 @@ const UserProvider = ({children}) => {
         getAllUsers().then(({data}) => setUsers(data))
     }, [])
 
-    function addUser(user){
-        postUser(user).then(({ data }) => {
+    async function addUser(user){
+        try {
+            const { data } = await postUser(user);
             setUsers([...users, data]);
-        })
+            return true;
+        } catch (err) {
+            return false;
+        }
     }
 
-    function deleteUser(id){
-        deleteUserById(id).then(({ data }) => {
+    async function deleteUser(id){
+        try {
+            const { data } = await deleteUserById(id);
             setUsers(users.filter(u => u.id !== data.id));
-        })
+            return true;
+        } catch (err) {
+            return false;
+        }
     }
 
     return (

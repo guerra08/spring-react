@@ -1,22 +1,33 @@
-import { Container } from "@material-ui/core";
-import UserList from "./component/UserList";
-import UserForm from "./component/UserForm";
+import React from "react";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+
+import User from "./page/User";
+import Home from "./page/Home";
 import { UserProvider } from './store/UserContext';
 
 import "./style/index.css"
-import "./style/App.css"
 
 function App() {
   return (
-    <Container fixed>
+    <UserProvider>
       <div className="main-container">
         <h1>Spring Boot with React</h1>
-        <UserProvider>
-          <UserForm/>
-          <UserList/>
-        </UserProvider>
+        <BrowserRouter>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/user">Add User</Link>
+          </nav>
+          <Switch>
+            <Route path="/user">
+              <User />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </BrowserRouter>
       </div>
-    </Container>
+    </UserProvider>
   );
 }
 
