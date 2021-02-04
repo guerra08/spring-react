@@ -16,4 +16,8 @@ function postUser(user){
     return Axios.post("/users", user);
 }
 
-export { getAllUsers, getUserById, deleteUserById, postUser }
+function patchUser(user, id){
+    return Axios.patch(`/users/${id}`, user);
+}
+
+export { getAllUsers, getUserById, deleteUserById, postUser, patchUser }

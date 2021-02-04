@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAllUsers, postUser, deleteUserById } from "../service/UserService"
+import { getAllUsers, postUser, deleteUserById, patchUser } from "../service/UserService"
 
 const UserContext = React.createContext({});
 
@@ -31,8 +31,22 @@ const UserProvider = ({children}) => {
         }
     }
 
+    async function updateUser(user, id){
+        try{
+            const { data } = await patchUser(user, id);
+            const updated = users.map(e => {
+                if(e.id === id) return data;
+                return e;
+            });
+            setUsers(updated);
+            return true
+        }catch(err){
+            return false;
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ users, addUser, deleteUser }}>
+        <UserContext.Provider value={{ users, addUser, deleteUser, updateUser }}>
             {children}
         </UserContext.Provider>
     )
